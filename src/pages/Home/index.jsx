@@ -8,7 +8,7 @@ export const Home = () => {
 
     const { products, editModal } = useContext(ProductsContext);
 
-
+    console.log(products)
 
     return (
         <>
@@ -22,6 +22,7 @@ export const Home = () => {
                 {products ? products.data.products.map(product => {
                     return (
                         <ProductList
+
                             key={product.id}
                             product={product} />
                     )

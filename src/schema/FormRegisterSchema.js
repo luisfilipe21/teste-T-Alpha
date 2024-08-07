@@ -6,7 +6,5 @@ export const FormRegisterSchema = z.object({
     mail: z.string().email().min(1),
     phone: z.string().min(10),
     password: z.string().min(8, "É necessário pelo menos oito caracteres.")
-        .regex(/(?=.*?[A-Z])/, "É necessário pelo menos uma letra maiúscula")
-        .regex(/(?=.*?[a-z])/, "É necessário pelo menos uma letra minúscula")
-        .regex(/(?=.*?[0-9])/, "É necessário pelo menos um número"),
+       
 })
