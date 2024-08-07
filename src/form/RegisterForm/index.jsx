@@ -4,6 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormRegisterSchema } from "../../schema/FormRegisterSchema";
 import { api } from "../../service";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 
 
 export const RegisterForm = () => {
@@ -11,18 +13,12 @@ export const RegisterForm = () => {
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(FormRegisterSchema)
     });
+    const { registerUser } = useContext(UserContext);
 
-    const navigate = useNavigate();
 
-    const submit = async (payload) => {
-        try {
-            await api.post("/api/auth/register", payload);
-            navigate("/login")
 
-        } catch (error) {
-            console.error(error.message)
-        }
-
+    const submit = (payload) => {
+        registerUser(payload)
     }
 
     return (

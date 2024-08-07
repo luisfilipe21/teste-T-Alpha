@@ -20,7 +20,7 @@ export const LoginForm = () => {
 
     const submit = async (payload) => {
         try {
-            const { data, success } = await api.post("/api/auth/login", payload);
+            const { data } = await api.post("/api/auth/login", payload);
             localStorage.setItem("@TOKEN", data.data.token);
 
             setUser(data.success);
