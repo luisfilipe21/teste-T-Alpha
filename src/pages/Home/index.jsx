@@ -2,30 +2,33 @@ import { useContext } from "react"
 import { ProductsContext } from "../../context/ProductsContext"
 import { CreateProductForm } from "../../form/CreateProductForm";
 import { ProductList } from "./ProductList";
+import { EditModal } from "../../components/EditModal";
 
 export const Home = () => {
 
-    const { products } = useContext(ProductsContext);
+    const { products, editModal } = useContext(ProductsContext);
 
-    console.log(products.data.products)
 
 
     return (
-        <section>
-            <div>
-                <CreateProductForm />
-            </div>
-            espacinho aqui
+        <>
+
+            <section>
+                <div>
+                    <CreateProductForm />
+                </div>
 
 
-            {products.data.products && products.data.products.map(product => {
-                return (
-                    <ProductList 
-                    key={product.id} 
-                    product={product} />
-                )
-            })}
+                {products.data.products && products.data.products.map(product => {
+                    return (
+                        <ProductList
+                            key={product.id}
+                            product={product} />
+                    )
+                })}
+            </section>
 
-        </section>
+            {editModal ? <EditModal /> : null}
+        </>
     )
 }
