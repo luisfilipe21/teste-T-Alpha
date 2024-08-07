@@ -19,10 +19,9 @@ export const Home = () => {
                 </div>
 
 
-                {products ? products.data.products.map(product => {
+                {products ? products.products.map(product => {
                     return (
                         <ProductList
-
                             key={product.id}
                             product={product} />
                     )

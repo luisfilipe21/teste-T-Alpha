@@ -93,7 +93,7 @@ export const ProductsProvider = ({ children }) => {
                     const { data } = await api.get("/api/products/get-all-products", {
                         headers: { Authorization: `Bearer ${token}` }
                     })
-                    setProducts(data)
+                    setProducts(data.data)
                 } catch (error) {
                     console.error(error);
                 }

@@ -8,6 +8,7 @@ export const ProductList = ({ product }) => {
     const { setEditModal , editProduct, setEditProduct, deleteProduct} = useContext(ProductsContext);
 
     const action = () => {
+        console.log(product.id)
         setEditProduct(product);
         setEditModal(true);
     }
