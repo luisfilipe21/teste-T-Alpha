@@ -22,7 +22,7 @@ export const LoginForm = () => {
         try {
             const { data, success } = await api.post("/api/auth/login", payload);
             localStorage.setItem("@TOKEN", data.data.token);
-            console.log(data.success);
+
             setUser(data.success);
             navigate("/home");
         } catch (error) {

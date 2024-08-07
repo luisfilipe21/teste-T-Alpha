@@ -7,13 +7,18 @@ import { FormCreateProductSchema } from "../../schema/FormCreateProductSchema";
 
 export const FormEditProduct = () => {
 
-    const { editProduct, updateProduct } = useContext(ProductsContext);
+    const { editProduct, updateProduct, editModal } = useContext(ProductsContext);
     const { register, handleSubmit, formState: { errors } } = useForm({
-        resolver: zodResolver(FormCreateProductSchema)
+        values:{
+            name: editProduct.name,
+            description: editProduct.description,
+            price: editProduct.price,
+            stock: editProduct.stock
+        }
     })
 
     const submit = async (payload) => {
-        console.log(payload)
+        
         await updateProduct(payload)
     }
 

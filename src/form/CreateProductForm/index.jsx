@@ -11,16 +11,10 @@ export const CreateProductForm = () => {
         resolver: zodResolver(FormCreateProductSchema)
     });
 
-    const {createProduct} = useContext(ProductsContext)
+    const { createProduct } = useContext(ProductsContext)
 
     const submit = async (payload) => {
-        // console.log(payload)
-        const success = await createProduct(payload);
-
-        if(success){
-            console.log("deu bom")
-        }
-        
+        await createProduct(payload);
     }
 
     return (

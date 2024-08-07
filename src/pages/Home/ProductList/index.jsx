@@ -8,14 +8,12 @@ export const ProductList = ({ product }) => {
     const { setEditModal , editProduct, setEditProduct, deleteProduct} = useContext(ProductsContext);
 
     const action = () => {
-        setEditModal(true)
-        setEditProduct(product)
-        console.log(editProduct)
+        setEditProduct(product);
+        setEditModal(true);
     }
 
     const erasePost = () => {
-        console.log(product.id)
-        deleteProduct(product.id)
+        
     }
 
     return (
@@ -36,7 +34,7 @@ export const ProductList = ({ product }) => {
                     </p>
                 </div>
             </div>
-            <BiTrash onClick={erasePost} /> 
+            <BiTrash onClick={() => deleteProduct(product.id)} /> 
             <FaEdit onClick={action} />
         </div>
     )

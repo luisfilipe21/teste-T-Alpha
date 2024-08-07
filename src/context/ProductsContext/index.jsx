@@ -8,8 +8,8 @@ export const ProductsProvider = ({ children }) => {
 
     const [products, setProducts] = useState([]);
     const [oneProduct, setOneProduct] = useState([]);
-    const [editModal, setEditModal] = useState(false);
-    const [editProduct, setEditProduct] = useState([]);
+    const [editModal, setEditModal] = useState(null);
+    const [editProduct, setEditProduct] = useState(null);
 
 
     const getOneProduct = async (productId) => {
@@ -18,7 +18,7 @@ export const ProductsProvider = ({ children }) => {
         if (token) {
             const { data } = await api.get(`/api/products/get-one-product/${productId}`);
 
-            const oneProduct = products.map(product => {
+            const oneProduct = products.data.products.map(product => {
                 if (product.id === productId) {
                     return data;
                 } else {
@@ -31,16 +31,13 @@ export const ProductsProvider = ({ children }) => {
 
     const createProduct = async (payload) => {
         const token = localStorage.getItem("@TOKEN");
-
+        let result = false
         if (token) {
             try {
-                const newProduct = { ...payload };
-
-                const { data } = await api.post("/api/products/create-product", newProduct, {
+                await api.post("/api/products/create-product", payload, {
                     headers: { Authorization: `Bearer ${token}` }
                 })
-                setProducts(data);
-                console.log(products)
+                result = true
             } catch (error) {
                 console.log(error);
             }
@@ -52,12 +49,12 @@ export const ProductsProvider = ({ children }) => {
 
         if (token) {
             try {
-                const { data } = await api.patch(`/api/products/update-product/${editProduct.id}`, payload, {
+                const { data } = await api.patch(`/api/products/update-product/${editModal.id}`, payload, {
                     headers: { Authorization: `Bearer ${token}` }
                 })
 
                 const updatedProduct = products.data.products.map(product => {
-                    if (product.id === editProduct.id) {
+                    if (product.id === editModal.id) {
                         return data;
                     } else {
                         return product;
@@ -72,11 +69,15 @@ export const ProductsProvider = ({ children }) => {
     }
 
     const deleteProduct = async (productId) => {
-        const token = localStorage.getItem("@TOKEN");
+
         try {
+            const token = localStorage.getItem("@TOKEN");
             await api.delete(`/api/products/delete-product/${productId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
+
+            const newProductsList = products.filter(product => product.id !== productId);
+            setProducts(newProductsList);
         } catch (error) {
             console.log(error)
         }

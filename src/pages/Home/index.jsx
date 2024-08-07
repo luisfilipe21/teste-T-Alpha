@@ -19,13 +19,14 @@ export const Home = () => {
                 </div>
 
 
-                {products.data.products && products.data.products.map(product => {
+                {products ? products.data.products.map(product => {
                     return (
                         <ProductList
                             key={product.id}
                             product={product} />
                     )
-                })}
+                }): null}
+
             </section>
 
             {editModal ? <EditModal /> : null}
