@@ -44,7 +44,7 @@ export const LoginForm = () => {
                 label="Senha"
                 errors={errors.password}
             />
-            <button type="submit">Register</button>
+            <button type="submit">Login</button>
         </form>
     )
 }

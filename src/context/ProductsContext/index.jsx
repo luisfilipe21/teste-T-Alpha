@@ -27,18 +27,18 @@ export const ProductsProvider = ({ children }) => {
         }
     }
 
-    const createPosition = async (payload) => {
+    const createProduct = async (payload) => {
         const token = localStorage.getItem("@TOKEN");
 
         if (token) {
             try {
                 const newProduct = { ...payload };
 
-                const { data } = await api.post("/api/products/create-product", payload, {
+                const {data} = await api.post("/api/products/create-product", newProduct, {
                     headers: { Authorization: `Bearer ${token}` }
                 })
-                setProducts(...data);
-
+                setProducts(data);
+                console.log(products)
             } catch (error) {
                 console.log(error);
             }
@@ -88,13 +88,14 @@ export const ProductsProvider = ({ children }) => {
 
             if (token) {
                 try {
-                    const { data } = await api.get("/api/products/get-all-products")
+                    const { data } = await api.get("/api/products/get-all-products",{
+                        headers: { Authorization: `Bearer ${token}`}
+                    })
                     setProducts(data)
                 } catch (error) {
                     console.error(error);
                 }
             }
-
         }
         getAllProducts();
     }, [])
@@ -102,9 +103,8 @@ export const ProductsProvider = ({ children }) => {
 
     return (
         <ProductsContext.Provider value={({
-            products, setProducts, createPosition, updateProduct, deleteProduct, oneProduct, setOneProduct
-            , getOneProduct
-        })}>
+            products, setProducts, createProduct, updateProduct, deleteProduct, oneProduct, setOneProduct
+            , getOneProduct})}>
             {children}
         </ProductsContext.Provider>
     )

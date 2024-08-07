@@ -1,7 +1,9 @@
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Inputs } from "../../components/Input";
 import { FormCreateProductSchema } from "../../schema/FormCreateProductSchema";
+import { useContext } from "react";
+import { ProductsContext } from "../../context/ProductsContext";
 
 export const CreateProductForm = () => {
 
@@ -9,40 +11,50 @@ export const CreateProductForm = () => {
         resolver: zodResolver(FormCreateProductSchema)
     });
 
-    const submit = (payload) => {
-        console.log(payload)
+    const {createProduct} = useContext(ProductsContext)
+
+    const submit = async (payload) => {
+        // console.log(payload)
+        const success = await createProduct(payload);
+
+        if(success){
+            console.log("deu bom")
+        }
+        
     }
 
     return (
         <form onSubmit={handleSubmit(submit)}>
             <Inputs
                 {...register("name")}
+                label="Nome do produto"
                 placeholder="Nome do produto"
                 type="string"
-                label="Nome do produto"
                 errors={errors.name}
             />
 
             <Inputs
                 {...register("description")}
+                label="Descrição do produto"
                 placeholder="Descrição do produto"
                 type="string"
-                label="Descrição do produto"
                 errors={errors.description}
             />
+
             <Inputs
                 {...register("price")}
+                label="Preço do produto"
                 placeholder="Preço do produto"
                 type="number"
-                label="Preço do produto"
                 errors={errors.price}
             />
+
             <Inputs
                 {...register("stock")}
+                label="Quantidade em estoque"
                 placeholder="Quantidade em estoque"
                 type="number"
                 errors={errors.stock}
-                label="Quantidade em estoque"
             />
 
             <button type="submit">Cadastrar novo produto</button>

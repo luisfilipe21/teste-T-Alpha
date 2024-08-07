@@ -15,16 +15,14 @@ export const RegisterForm = () => {
     const navigate = useNavigate();
 
     const submit = async (payload) => {
-
         try {
             await api.post("/api/auth/register", payload);
             navigate("/login")
 
         } catch (error) {
-            
             console.error(error.message)
         }
-         
+
     }
 
     return (
@@ -63,7 +61,7 @@ export const RegisterForm = () => {
                 type="password"
                 errors={errors.password}
             />
-            <button type="submit">Register</button>
+            <button type="submit">Cadastrar novo usuário</button>
         </form>
     )
 }
