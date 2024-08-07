@@ -49,12 +49,12 @@ export const ProductsProvider = ({ children }) => {
 
         if (token) {
             try {
-                const { data } = await api.patch(`/api/products/update-product/${editModal.id}`, payload, {
+                const { data } = await api.patch(`/api/products/update-product/${editProduct.id}`, payload, {
                     headers: { Authorization: `Bearer ${token}` }
                 })
 
                 const updatedProduct = products.data.products.map(product => {
-                    if (product.id === editModal.id) {
+                    if (product.id === editProduct.id) {
                         return data;
                     } else {
                         return product;

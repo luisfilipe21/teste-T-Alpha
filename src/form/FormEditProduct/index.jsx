@@ -7,7 +7,7 @@ import { FormCreateProductSchema } from "../../schema/FormCreateProductSchema";
 
 export const FormEditProduct = () => {
 
-    const { editProduct, updateProduct, editModal } = useContext(ProductsContext);
+    const {products, editProduct, updateProduct } = useContext(ProductsContext);
     const { register, handleSubmit, formState: { errors } } = useForm({
         values:{
             name: editProduct.name,
@@ -18,7 +18,7 @@ export const FormEditProduct = () => {
     })
 
     const submit = async (payload) => {
-        
+        console.log(products.data.products[0].id)
         await updateProduct(payload)
     }
 
