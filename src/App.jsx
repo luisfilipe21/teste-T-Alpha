@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { api } from "./service"
+import { LoginPage } from "./pages/LoginPage";
+import { RegisterPage } from "./pages/RegisterPage";
 
 function App() {
 
@@ -18,7 +20,8 @@ function App() {
 
   return (
     <>
-      sad
+      <LoginPage />
+      <RegisterPage />
     </>
   )
 }
