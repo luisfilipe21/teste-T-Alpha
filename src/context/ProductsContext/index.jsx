@@ -36,7 +36,9 @@ export const ProductsProvider = ({ children }) => {
         const token = localStorage.getItem("@TOKEN");
 
         if (token) {
-            const { data } = await api.get(`/api/products/get-one-product/${productId}`);
+            const { data } = await api.get(`/api/products/get-one-product/${productId}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
 
             const oneProduct = products.products.map(product => {
                 if (product.id === productId) {
@@ -70,7 +72,7 @@ export const ProductsProvider = ({ children }) => {
 
         if (token) {
             try {
-                const newEditProduct = {...editProduct, ...payload}
+                const newEditProduct = { ...editProduct, ...payload }
                 const { data } = await api.patch(`/api/products/update-product/${editProduct.id}`, newEditProduct, {
                     headers: { Authorization: `Bearer ${token}` }
                 })
