@@ -13,8 +13,9 @@ export const CreateProductForm = () => {
 
     const { createProduct } = useContext(ProductsContext)
 
-    const submit = async (payload) => {
-        await createProduct(payload);
+    const submit = (payload) => {
+        createProduct(payload);
+        reset();
     }
 
     return (

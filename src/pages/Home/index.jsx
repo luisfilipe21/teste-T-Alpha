@@ -8,7 +8,7 @@ export const Home = () => {
 
     const { products, editModal } = useContext(ProductsContext);
 
-    console.log(products)
+    console.log(products.products)
 
     return (
         <>
@@ -18,15 +18,17 @@ export const Home = () => {
                     <CreateProductForm />
                 </div>
 
+                <ul>
 
-                {products ? products.products.map(product => {
-                    return (
-                        <ProductList
-                            key={product.id}
-                            product={product} />
-                    )
-                }): null}
 
+                    {products ? products.products.map(product => {
+                        return (
+                            <ProductList
+                                key={product.id}
+                                product={product} />
+                        )
+                    }) : null}
+                </ul>
             </section>
 
             {editModal ? <EditModal /> : null}

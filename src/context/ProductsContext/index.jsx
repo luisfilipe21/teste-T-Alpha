@@ -11,6 +11,23 @@ export const ProductsProvider = ({ children }) => {
     const [editModal, setEditModal] = useState(null);
     const [editProduct, setEditProduct] = useState(null);
 
+    useEffect(() => {
+        const getAllProducts = async () => {
+            const token = localStorage.getItem("@TOKEN");
+
+            if (token) {
+                try {
+                    const { data } = await api.get("/api/products/get-all-products", {
+                        headers: { Authorization: `Bearer ${token}` }
+                    })
+                    setProducts(data.data)
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        }
+        getAllProducts();
+    }, [])
 
     const getOneProduct = async (productId) => {
         const token = localStorage.getItem("@TOKEN");
@@ -31,13 +48,14 @@ export const ProductsProvider = ({ children }) => {
 
     const createProduct = async (payload) => {
         const token = localStorage.getItem("@TOKEN");
-        let result = false
+
         if (token) {
             try {
-                await api.post("/api/products/create-product", payload, {
+                const {data} = await api.post("/api/products/create-product", payload, {
                     headers: { Authorization: `Bearer ${token}` }
                 })
-                result = true
+                setProducts([...products, data]);
+                console.log("deu certo")
             } catch (error) {
                 console.log(error);
             }
@@ -49,19 +67,19 @@ export const ProductsProvider = ({ children }) => {
 
         if (token) {
             try {
-                const { data } = await api.patch(`/api/products/update-product/${editProduct.id}`, payload, {
+                const { data } = await api.patch(`/api/products/update-product/${editProduct}`, payload, {
                     headers: { Authorization: `Bearer ${token}` }
                 })
+                console.log(data);
+                // const updatedProduct = products.data.products.map(product => {
+                //     if (product.id === editProduct) {
+                //         return data;
+                //     } else {
+                //         return product;
+                //     }
+                // })
 
-                const updatedProduct = products.data.products.map(product => {
-                    if (product.id === editProduct.id) {
-                        return data;
-                    } else {
-                        return product;
-                    }
-                })
-
-                setProducts(updatedProduct)
+                // setProducts(updatedProduct)
             } catch (error) {
                 console.log(error);
             }
@@ -69,38 +87,23 @@ export const ProductsProvider = ({ children }) => {
     }
 
     const deleteProduct = async (productId) => {
-
+        const token = localStorage.getItem("@TOKEN");
         try {
-            const token = localStorage.getItem("@TOKEN");
             await api.delete(`/api/products/delete-product/${productId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-
-            const newProductsList = products.filter(product => product.id !== productId);
+            const newProductsList = products.filter(({id}) => id !== productId);
             setProducts(newProductsList);
+
         } catch (error) {
-            console.log(error)
+
+            console.log("error")
+            console.log(error.message);
         }
     }
 
 
-    useEffect(() => {
-        const getAllProducts = async () => {
-            const token = localStorage.getItem("@TOKEN");
-
-            if (token) {
-                try {
-                    const { data } = await api.get("/api/products/get-all-products", {
-                        headers: { Authorization: `Bearer ${token}` }
-                    })
-                    setProducts(data.data)
-                } catch (error) {
-                    console.error(error);
-                }
-            }
-        }
-        getAllProducts();
-    }, [])
+    
 
 
     return (

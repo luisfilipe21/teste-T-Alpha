@@ -18,7 +18,7 @@ export const FormEditProduct = () => {
     })
 
     const submit = async (payload) => {
-        console.log(products.data.products[0].id)
+        // console.log(products.data.products[0].id)
         await updateProduct(payload)
     }
 

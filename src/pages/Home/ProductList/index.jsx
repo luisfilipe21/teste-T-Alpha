@@ -5,20 +5,16 @@ import { BiTrash } from "react-icons/bi";
 
 export const ProductList = ({ product }) => {
 
-    const { setEditModal , editProduct, setEditProduct, deleteProduct} = useContext(ProductsContext);
+    const { setEditModal, editProduct, setEditProduct, deleteProduct } = useContext(ProductsContext);
 
     const action = () => {
-        console.log(product.id)
-        setEditProduct(product);
-        setEditModal(true);
-    }
-
-    const erasePost = () => {
-        
+        setEditProduct(product.id);
+        // setEditModal(true);
+        reset();
     }
 
     return (
-        <div>
+        <li>
             <div>
                 <h3>
                     {product.name}
@@ -35,8 +31,8 @@ export const ProductList = ({ product }) => {
                     </p>
                 </div>
             </div>
-            <BiTrash onClick={() => deleteProduct(product.id)} /> 
+            <BiTrash onClick={() => deleteProduct(product.id)} />
             <FaEdit onClick={action} />
-        </div>
+        </li>
     )
 }

@@ -16,7 +16,6 @@ export const RegisterForm = () => {
     const { registerUser } = useContext(UserContext);
 
 
-
     const submit = (payload) => {
         registerUser(payload)
     }

@@ -2,8 +2,6 @@ import { useForm } from "react-hook-form";
 import { Inputs } from "../../components/Input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormLoginSchema } from "../../schema/FormLoginSchema";
-import { api } from "../../service";
-import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 
@@ -13,21 +11,10 @@ export const LoginForm = () => {
         resolver: zodResolver(FormLoginSchema)
     });
 
-    const { user, setUser } = useContext(UserContext);
+    const { userLogin } = useContext(UserContext);
 
-    const navigate = useNavigate();
-
-
-    const submit = async (payload) => {
-        try {
-            const { data } = await api.post("/api/auth/login", payload);
-            localStorage.setItem("@TOKEN", data.data.token);
-
-            setUser(data.success);
-            navigate("/home");
-        } catch (error) {
-            console.log(error.message);
-        }
+    const submit = (payload) => {
+        userLogin(payload);
     }
 
     return (

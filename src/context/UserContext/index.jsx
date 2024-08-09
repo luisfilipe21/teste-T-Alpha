@@ -18,10 +18,21 @@ export const UserProvider = ({ children }) => {
         } catch (error) {
             console.error(error.message)
         }
+    }
 
+    const userLogin = async (payload) => {
+        try {
+            const { data } = await api.post("/api/auth/login", payload);
+            localStorage.setItem("@TOKEN", data.data.token);
+            
+            setUser(data.success);
+            navigate("/home");
+        } catch (error) {
+            console.log(error.message);
+        }
     }
     return (
-        <UserContext.Provider value={({ user, setUser, registerUser })}>
+        <UserContext.Provider value={({ user, setUser, registerUser, userLogin })}>
             {children}
         </UserContext.Provider>
     )
