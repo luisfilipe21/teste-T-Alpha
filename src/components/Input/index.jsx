@@ -5,7 +5,7 @@ export const Inputs = forwardRef(({ errors, ...rest }, ref) => {
     return (
         <>
             <input ref={ref} {...rest} />
-            {errors ? <p>{errors.message}</p> : null}
+            <span>  {errors ? <p>{errors.message}</p> : null}</span>
         </>
     )
 })

@@ -1,8 +1,8 @@
 import { useContext } from "react"
 import { ProductsContext } from "../../context/ProductsContext"
 import { CreateProductForm } from "../../form/CreateProductForm";
-import { ProductList } from "./ProductList";
 import { EditModal } from "../../components/EditModal";
+import { ProductList } from "../../components/ProductList";
 
 export const Home = () => {
 
@@ -12,24 +12,21 @@ export const Home = () => {
 
     return (
         <>
-
-            <section>
+            <main>
                 <div>
                     <CreateProductForm />
                 </div>
 
                 <ul>
-
-
-                    {products ? products.products.map(product => {
+                    {products && products.products.map(product => {
                         return (
                             <ProductList
                                 key={product.id}
                                 product={product} />
                         )
-                    }) : null}
+                    })}
                 </ul>
-            </section>
+            </main>
 
             {editModal ? <EditModal /> : null}
         </>

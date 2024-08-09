@@ -2,8 +2,6 @@ import { useForm } from "react-hook-form";
 import { Inputs } from "../../components/Input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormRegisterSchema } from "../../schema/FormRegisterSchema";
-import { api } from "../../service";
-import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 

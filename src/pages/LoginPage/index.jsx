@@ -6,9 +6,9 @@ export const LoginPage = () => {
 
     
     return (
-        <section>
+        <main>
             <p onClick={() => navigate("/register")}>Cadastro de usuário</p>
             <LoginForm />
-        </section>
+        </main>
     )
 }

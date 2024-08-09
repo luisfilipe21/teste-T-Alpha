@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { api } from "../../service";
 
 
@@ -11,11 +11,13 @@ export const ProductsProvider = ({ children }) => {
     const [editModal, setEditModal] = useState(null);
     const [editProduct, setEditProduct] = useState(null);
 
-    useEffect(() => {
-        const getAllProducts = async () => {
-            const token = localStorage.getItem("@TOKEN");
 
-            if (token) {
+    useEffect(() => {
+
+        const token = localStorage.getItem("@TOKEN");
+
+        if (token) {
+            const getAllProducts = async () => {
                 try {
                     const { data } = await api.get("/api/products/get-all-products", {
                         headers: { Authorization: `Bearer ${token}` }
@@ -25,9 +27,10 @@ export const ProductsProvider = ({ children }) => {
                     console.error(error);
                 }
             }
+            getAllProducts();
         }
-        getAllProducts();
     }, [])
+
 
     const getOneProduct = async (productId) => {
         const token = localStorage.getItem("@TOKEN");
@@ -51,11 +54,11 @@ export const ProductsProvider = ({ children }) => {
 
         if (token) {
             try {
-                const {data} = await api.post("/api/products/create-product", payload, {
+                const { data } = await api.post("/api/products/create-product", payload, {
                     headers: { Authorization: `Bearer ${token}` }
                 })
                 setProducts([...products, data]);
-                console.log("deu certo")
+
             } catch (error) {
                 console.log(error);
             }
@@ -67,21 +70,17 @@ export const ProductsProvider = ({ children }) => {
 
         if (token) {
             try {
-                const { data } = await api.patch(`/api/products/update-product/${editProduct}`, payload, {
+                const newEditProduct = [...editProduct, ...payload]
+                const { data } = await api.patch(`/api/products/update-product/${editProduct.id}`, newEditProduct, {
                     headers: { Authorization: `Bearer ${token}` }
                 })
-                console.log(data);
-                // const updatedProduct = products.data.products.map(product => {
-                //     if (product.id === editProduct) {
-                //         return data;
-                //     } else {
-                //         return product;
-                //     }
-                // })
 
-                // setProducts(updatedProduct)
+                const updatedProduct = products.products.map((product) =>
+                    products.products.id === editProduct.id ? data : product
+                )
+                setProducts(updatedProduct)
             } catch (error) {
-                console.log(error);
+                console.log(error.message);
             }
         }
     }
@@ -92,7 +91,7 @@ export const ProductsProvider = ({ children }) => {
             await api.delete(`/api/products/delete-product/${productId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            const newProductsList = products.filter(({id}) => id !== productId);
+            const newProductsList = products.filter(({ id }) => id !== productId);
             setProducts(newProductsList);
 
         } catch (error) {
@@ -103,7 +102,7 @@ export const ProductsProvider = ({ children }) => {
     }
 
 
-    
+
 
 
     return (

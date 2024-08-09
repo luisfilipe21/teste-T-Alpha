@@ -4,8 +4,8 @@ import { CgClose } from "react-icons/cg";
 import { FormEditProduct } from "../../form/FormEditProduct";
 
 export const EditModal = () => {
-    const { setEditModal } = useContext(ProductsContext);
-
+    const { products, setEditModal , } = useContext(ProductsContext);
+    
     return (
         <div>
             <div>

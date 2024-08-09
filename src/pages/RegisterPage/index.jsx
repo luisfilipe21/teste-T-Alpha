@@ -5,9 +5,9 @@ export const RegisterPage = () => {
     const navigate = useNavigate();
 
     return (
-        <section>
+        <main>
             <p onClick={() => navigate("/")}>página de login</p>
             <RegisterForm />
-        </section>
+        </main>
     )
 }

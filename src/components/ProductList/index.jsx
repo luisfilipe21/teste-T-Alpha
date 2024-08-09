@@ -1,5 +1,5 @@
 import { FaEdit } from "react-icons/fa";
-import { ProductsContext } from "../../../context/ProductsContext";
+import { ProductsContext } from "../../context/ProductsContext";
 import { useContext } from "react";
 import { BiTrash } from "react-icons/bi";
 
@@ -7,10 +7,10 @@ export const ProductList = ({ product }) => {
 
     const { setEditModal, editProduct, setEditProduct, deleteProduct } = useContext(ProductsContext);
 
-    const action = () => {
-        setEditProduct(product.id);
-        // setEditModal(true);
-        reset();
+    const action = async () => {
+        await setEditProduct(product);
+        await setEditModal(true);
+        console.log(editProduct);
     }
 
     return (

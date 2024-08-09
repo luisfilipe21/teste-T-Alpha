@@ -23,7 +23,7 @@ export const LoginForm = () => {
                 placeholder="CPF"
                 type="string"
                 label="CPF ou CNPJ"
-                errors={errors.cpf}
+                errors={errors.taxNumber}
             />
             <Inputs {...register("password")}
                 placeholder="Senha"
@@ -31,6 +31,7 @@ export const LoginForm = () => {
                 label="Senha"
                 errors={errors.password}
             />
+            
             <button type="submit">Login</button>
         </form>
     )
