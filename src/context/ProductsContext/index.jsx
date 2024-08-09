@@ -38,7 +38,7 @@ export const ProductsProvider = ({ children }) => {
         if (token) {
             const { data } = await api.get(`/api/products/get-one-product/${productId}`);
 
-            const oneProduct = products.data.products.map(product => {
+            const oneProduct = products.products.map(product => {
                 if (product.id === productId) {
                     return data;
                 } else {
@@ -70,13 +70,13 @@ export const ProductsProvider = ({ children }) => {
 
         if (token) {
             try {
-                const newEditProduct = [...editProduct, ...payload]
+                const newEditProduct = {...editProduct, ...payload}
                 const { data } = await api.patch(`/api/products/update-product/${editProduct.id}`, newEditProduct, {
                     headers: { Authorization: `Bearer ${token}` }
                 })
 
                 const updatedProduct = products.products.map((product) =>
-                    products.products.id === editProduct.id ? data : product
+                    product.id === newEditProduct.id ? data : product
                 )
                 setProducts(updatedProduct)
             } catch (error) {
